@@ -18,11 +18,10 @@ MLXDIR		:= $(DEPENDDIR)/minilibx_opengl_20191021
 MLXLIB		:= mlx
 MLXFLAG		:= -framework OpenGL -framework AppKit
 GNLDIR		:= $(DEPENDDIR)/gnl
-GNLLIB		:= gnl
 LFDIR		:= $(DEPENDDIR)/libft
 LFLIB		:= ft
 
-DEPLIBS		:=	$(GNLLIB) $(MLXLIB) $(LFLIB)
+DEPLIBS		:=	$(MLXLIB) $(LFLIB)
 DEPDIRS		:=	$(GNLDIR) $(MLXDIR) $(LFDIR)
 
 #Compiler, Linker, Flags
