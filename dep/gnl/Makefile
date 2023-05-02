@@ -1,34 +1,28 @@
 #The Target
 #For Binary: <name>, For Library: lib<name>.a
-NAME		:=	cub3D
+NAME		:=	libgnl.a
 
 #Source Files
-SOURCES		:=	main.c \
+SOURCES		:=	get_next_line_bonus.c \
+				get_next_line_utils_bonus.c \
 
 #The Directories, Source, Includes, Dependencies
 TESTDIR		:=	test
 BONUSDIR	:=	bonus
-SRCDIR		:=	src
-INCDIR		:=	inc
+SRCDIR		:=	./
+INCDIR		:=	./
 DEPDIR		:=	dep
 BLDDIR		:=	obj
 
 #Dependencies
-MLXDIR		:= $(DEPENDDIR)/minilibx_opengl_20191021
-MLXLIB		:= mlx
-MLXFLAG		:= -framework OpenGL -framework AppKit
-GNLDIR		:= $(DEPENDDIR)/gnl
-LFDIR		:= $(DEPENDDIR)/libft
-LFLIB		:= ft
-
-DEPLIBS		:=	$(MLXLIB) $(LFLIB)
-DEPDIRS		:=	$(GNLDIR) $(MLXDIR) $(LFDIR)
+DEPLIBS		:=	
+DEPDIRS		:=	
 
 #Compiler, Linker, Flags
 CC			:=	cc
 # DEBUG		:=	-g
 # SANITIZE	:=	-fsanitize=address
-CFLAGS		:=	-Wall -Wextra -Werror
+CFLAGS		:=	-Wall -Wextra -Werror -D BUFFER_SIZE=100
 
 #-------------------------------------------------------------------------------
 #DO NOT EDIT BELOW THIS LINE
@@ -84,7 +78,7 @@ $(NAME): $(OBJS)
 ifeq ($(TARGET), .a)
 	$(AR) -rc $@ $^
 else
-	$(CC) $(MLXFLAG) $(SANITIZE) $(DEBUG) $(INC) -o $(NAME) $^ $(LID) $(LIB)
+	$(CC) $(SANITIZE) $(DEBUG) $(INC) -o $(NAME) $^ $(LID) $(LIB)
 endif
 
 #Compile
