@@ -6,13 +6,21 @@
 /*   By: yback <yback@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 15:15:32 by yback             #+#    #+#             */
-/*   Updated: 2022/08/10 21:26:34 by yback            ###   ########.fr       */
+/*   Updated: 2023/05/03 23:07:25 by yback            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <stdlib.h>
 #include "get_next_line_bonus.h"
+
+char	*ft_strchr(char *s, int c);
+size_t	ft_strlen(const char *str);
+char	*ft_strjoin(char *s1, char *s2);
+char	*making_backup(int fd, char *backup);
+char	*making_newbackup(char *backup);
+char	*making_ans(char *backup);
+
 
 char	*free_null(char **arr)
 {
