@@ -6,7 +6,7 @@
 /*   By: seongspa <seongspa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 18:30:34 by seongspa          #+#    #+#             */
-/*   Updated: 2023/05/03 20:01:59 by seongspa         ###   ########.fr       */
+/*   Updated: 2023/05/03 20:19:00 by seongspa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,13 @@
 # define WINDOW_H	(600)
 
 # include "key_macos.h"
+# include "map.h"
 
 typedef struct s_engine
 {
 	void		*ctx;
 	void		*window;
+	t_map		*map;
 }	t_engine;
 
 void	destroy_engine(t_engine *eng);
