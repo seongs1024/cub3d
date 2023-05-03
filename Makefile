@@ -14,11 +14,11 @@ DEPDIR		:=	dep
 BLDDIR		:=	obj
 
 #Dependencies
-MLXDIR		:= $(DEPENDDIR)/minilibx_opengl_20191021
+MLXDIR		:= minilibx_opengl_20191021
 MLXLIB		:= mlx
 MLXFLAG		:= -framework OpenGL -framework AppKit
-GNLDIR		:= $(DEPENDDIR)/gnl
-LFDIR		:= $(DEPENDDIR)/libft
+GNLDIR		:= gnl
+LFDIR		:= libft
 LFLIB		:= ft
 
 DEPLIBS		:=	$(MLXLIB) $(LFLIB)
