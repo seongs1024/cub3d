@@ -6,13 +6,13 @@
 /*   By: yback <yback@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 12:27:26 by yback             #+#    #+#             */
-/*   Updated: 2022/07/12 14:25:36 by yback            ###   ########.fr       */
+/*   Updated: 2023/05/03 21:05:33 by yback            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strchr(const char *s, int c)
+char	*ft_strchr(char *s, int c)
 {
 	int	i;
 	int	size;
