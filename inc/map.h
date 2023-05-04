@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seongspa <seongspa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yback <yback@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 15:24:55 by seongspa          #+#    #+#             */
-/*   Updated: 2023/05/02 15:28:38 by seongspa         ###   ########.fr       */
+/*   Updated: 2023/05/04 18:31:37 by yback            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ typedef struct s_map
 	char	*east_path;
 	int		f_colors[3];
 	int		c_colors[3];
+	int		flag;
 
 	int		map_width;
 	int		map_height;
