@@ -50,9 +50,21 @@ int	close_hook(t_engine *egn)
 int	key_hook(int key, t_engine *egn)
 {
 	printf("KEY STROKE: %d\n", key);
-	if (key == KEY_W || key == KEY_A || key == KEY_S || key == KEY_D)
+	if (key == KEY_W)
 	{
-		/* move camera */
+		move_forward(&egn->cam, egn->map);
+	}
+	else if (key == KEY_S)
+	{
+		move_backward(&egn->cam, egn->map);
+	}
+	else if (key == KEY_A)
+	{
+		turn_left(&egn->cam);
+	}
+	else if (key == KEY_D)
+	{
+		turn_right(&egn->cam);
 	}
 	else if (key == KEY_ESCAPE)
 		close_hook(egn);

@@ -13,6 +13,8 @@
 #ifndef CAMERA_H
 # define CAMERA_H
 
+# include "map.h"
+
 typedef struct s_camera
 {
 	double	pos_x;
@@ -24,5 +26,10 @@ typedef struct s_camera
 	double	move_speed;
 	double	rot_speed;
 }	t_camera;
+
+void    move_forward(t_camera *cam, t_map *map);
+void    move_backward(t_camera *cam, t_map *map);
+void    turn_left(t_camera *cam);
+void    turn_right(t_camera *cam);
 
 #endif

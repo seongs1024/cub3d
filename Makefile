@@ -6,6 +6,7 @@ NAME		:=	cub3D
 SOURCES		:=	main.c \
 				engine.c \
 				display.c \
+				camera.c \
 
 #The Directories, Source, Includes, Dependencies
 TESTDIR		:=	test
