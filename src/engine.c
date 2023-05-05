@@ -12,15 +12,21 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include "mlx.h"
 #include "engine.h"
 
-void	destroy_engine(t_engine *eng)
+void	destroy_engine(t_engine *egn)
 {
-	if (eng->window)
+	if (egn->display.img)
 	{
-		mlx_destroy_window(eng->ctx, eng->window);
-		eng->window = 0;
+		mlx_destroy_image(egn->ctx, egn->display.img);
+		egn->display.img = 0;
+	}
+	if (egn->window)
+	{
+		mlx_destroy_window(egn->ctx, egn->window);
+		egn->window = 0;
 	}
 	system("leaks cub3D");
 	exit(0);
@@ -36,17 +42,18 @@ int	close_hook(t_engine *egn)
 int	key_hook(int key, t_engine *egn)
 {
 	printf("KEY STROKE: %d\n", key);
-	mlx_clear_window(egn->ctx, egn->window);
 	if (key == KEY_W || key == KEY_A || key == KEY_S || key == KEY_D)
 	{
 		/* move camera */
+		render_map(&egn->display, egn->map);
 	}
 	else if (key == KEY_ESCAPE)
 		close_hook(egn);
+	mlx_put_image_to_window(egn->ctx, egn->window, egn->display.img, 0, 0);
 	return (0);
 }
 
-int	render_loop(t_engine *egn)
+int	frame_loop(t_engine *egn)
 {
 	static int	time;
 

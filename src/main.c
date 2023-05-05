@@ -68,9 +68,15 @@ int	main(void)
 
 	engine.map = temp_map();
 
+	engine.display.img = mlx_new_image(engine.ctx, WINDOW_W, WINDOW_H);
+	engine.display.addr = mlx_get_data_addr(engine.display.img, \
+		&engine.display.bits_per_pixel, \
+		&engine.display.line_length, \
+		&engine.display.endian);
+
 	mlx_key_hook(engine.window, &key_hook, &engine);
 	mlx_hook(engine.window, EVENT_EXIT, 0, &close_hook, &engine);
-	mlx_loop_hook(engine.ctx, &render_loop, &engine);
+	mlx_loop_hook(engine.ctx, &frame_loop, &engine);
 	mlx_loop(engine.ctx);
 	return (0);
 }

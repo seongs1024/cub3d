@@ -18,17 +18,19 @@
 
 # include "key_macos.h"
 # include "map.h"
+# include "display.h"
 
 typedef struct s_engine
 {
 	void		*ctx;
 	void		*window;
 	t_map		*map;
+	t_display	display;
 }	t_engine;
 
 void	destroy_engine(t_engine *eng);
 int		close_hook(t_engine *egn);
 int		key_hook(int key, t_engine *egn);
-int		render_loop(t_engine *egn);
+int		frame_loop(t_engine *egn);
 
 #endif
