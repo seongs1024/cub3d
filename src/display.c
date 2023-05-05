@@ -152,12 +152,19 @@ void	render_map_3d(t_display *dis, t_camera *cam, t_map *map, int width, int hei
 		int draw_end = line_height / 2 + height / 2;
 		if(draw_end >= height)
 			draw_end = height - 1;
-
+		if (map_x >= map->map_width)
+			map_x = map->map_width - 1;
+		if (map_y >= map->map_height)
+			map_y = map->map_height - 1;
+		if (map_x < 0)
+			map_x = 0;
+		if (map_y < 0)
+			map_y = 0;
 		int	color;
 		if (map->map[map_y][map_x] == '1')
 			color = 0xFF0000;
 		else if (map->map[map_y][map_x] == 'N')
-			color = 0xFFFF00;
+			color = 0xFF00FF;
 		else
 			color = 0xFFFFFF;
 		
