@@ -6,15 +6,13 @@
 /*   By: yback <yback@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 15:37:43 by yback             #+#    #+#             */
-/*   Updated: 2023/05/04 22:40:09 by yback            ###   ########seoul.kr  */
+/*   Updated: 2023/05/05 19:26:03 by yback            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "map.h"
 #include "get_next_line_bonus.h"
 #include "libft.h"
-#include <stdio.h>
-#include <fcntl.h>
 
 size_t	yb_strslen(char **strs)
 {
@@ -26,15 +24,27 @@ size_t	yb_strslen(char **strs)
 	return (len);
 }
 
-void	yb_check_path_empty(char **yb_path, char *splitted_line)
+int	yb_check_path_empty(char **yb_path, char *spl_line)
 {
-	if (*yb_path)
-	{
-		perror("Error: This path is already assigned!");
-		exit(1);
-	}
+	int		tmp_fd;
+	char	first_byte;
+
+	if (!yb_path)
+		return (-1);
 	else
-		*yb_path = splitted_line;
+	{
+		tmp_fd = open(spl_line, O_RDONLY);
+		if (tmp_fd == -1)
+			return (-1);
+		if (read(tmp_fd, &first_byte, 1) == 0)
+		{
+			close(tmp_fd);
+			return (-1);
+		}
+		*yb_path = ft_strdup(spl_line);
+		close(tmp_fd);
+	}
+	return (0);
 }
 
 int	yb_strcmp(char *s1, char *s2)
@@ -54,95 +64,110 @@ int	yb_strcmp(char *s1, char *s2)
 	return (1);
 }
 
-void	yb_path_init(t_map *yback_map, char **splitted_line)
+int	yb_path_init(char **spl_line, t_map *yback_map)
 {
-	if (yb_strcmp(splitted_line[0], "NO") == 1)
-		yb_check_path_empty(&yback_map->north_path, splitted_line[1]);
-	else if (yb_strcmp(splitted_line[0], "SO") == 1)
-		yb_check_path_empty(&yback_map->south_path, splitted_line[1]);
-	else if (yb_strcmp(splitted_line[0], "WE") == 1)
-		yb_check_path_empty(&yback_map->west_path, splitted_line[1]);
-	else if (yb_strcmp(splitted_line[0], "EA") == 1)
-		yb_check_path_empty(&yback_map->east_path, splitted_line[1]);
+	int	error_check;
+
+	error_check = 0;
+	if (yb_strcmp(spl_line[0], "NO") == 1)
+		error_check = yb_check_path_empty(&yback_map->north_path, spl_line[1]);
+	else if (yb_strcmp(spl_line[0], "SO") == 1)
+		error_check = yb_check_path_empty(&yback_map->south_path, spl_line[1]);
+	else if (yb_strcmp(spl_line[0], "WE") == 1)
+		error_check = yb_check_path_empty(&yback_map->west_path, spl_line[1]);
+	else if (yb_strcmp(spl_line[0], "EA") == 1)
+		error_check = yb_check_path_empty(&yback_map->east_path, spl_line[1]);
 	else
-	{
-		perror("Error: Invalid argument. Check!!");
-		exit(1);
-	}
+		error_check = -1;
+	return (error_check);
 }
 
-int	yb_atoi_check(char *splitted_color)
+int	yb_atoi_check(char *spl_color)
 {
 	int	num;
 
-	num = ft_atoi(splitted_color);
+	num = ft_atoi(spl_color);
 	if (!(0 <= num && num <= 255))
-	{
-		perror("Error: Invalid color number!");
-		exit(1);
-	}
+		return (-123);
 	return (num);
 }
 
-void	yb_check_int(char **splitted_color)
+int	yb_check_int(char **spl_color)
 {
 	int	i;
 
 	i = -1;
-	while (splitted_color[++i])
+	while (spl_color[++i])
 	{
-		if (ft_strchr(splitted_color[i], '.') != 0)
-		{
-			perror("Error: Only Integer color allowed!\n");
-			exit(1);
-		}
+		if (ft_strchr(spl_color[i], '.') != 0)
+			return (-1);
 	}
+	return (0);
 }
 
-void	yb_color_init(t_map *yback_map, char **splitted_line)
+void	yb_init_colors(t_map *yback_map, int *colors, char **spl_color)
 {
-	char	**splitted_color;
-	
-	splitted_color = ft_split(splitted_line[1], ',');
-	yb_check_int(splitted_color);
-	if (yb_strslen(splitted_color) != 3)
-	{
-		perror("Error: Invalid color.");
-		exit(1);
-	}
-	if (yb_strcmp(splitted_line[0], "F") == 1)
-	{
-		yback_map->flag++;
-		yback_map->f_colors[0] = yb_atoi_check(splitted_color[0]);
-		yback_map->f_colors[1] = yb_atoi_check(splitted_color[1]);
-		yback_map->f_colors[2] = yb_atoi_check(splitted_color[2]);
-	}
-	else if (yb_strcmp(splitted_line[0], "C") == 1)
-	{
-		yback_map->flag++;
-		yback_map->c_colors[0] = yb_atoi_check(splitted_color[0]);
-		yback_map->c_colors[1] = yb_atoi_check(splitted_color[1]);
-		yback_map->c_colors[2] = yb_atoi_check(splitted_color[2]);
-	}
+	yback_map->flag++;
+	colors[0] = yb_atoi_check(spl_color[0]);
+	colors[1] = yb_atoi_check(spl_color[1]);
+	colors[2] = yb_atoi_check(spl_color[2]);
 }
 
-void	yb_path_color_init(t_map *yback_map, char *line)
+int	yb_color_check(int *colors)
 {
-	char	**splitted_line;
+	int	i;
 
-	splitted_line = ft_split(line, ' ');
-	if (yb_strslen(splitted_line) == 2)
+	i = -1;
+	while (++i < 3)
 	{
-		if (yb_strcmp(splitted_line[0], "F") || yb_strcmp(splitted_line[0], "C"))
-			yb_color_init(yback_map, splitted_line);
+		if (colors[i] == -123)
+			return (-1);
+	}
+	return (0);
+}
+
+int	yb_color_init(char **spl_line, t_map *yback_map)
+{
+	char	**spl_color;
+	int		error_check;
+
+	error_check = 0;
+	spl_color = ft_split(spl_line[1], ',');
+	if (yb_check_int(spl_color) == -1 || yb_strslen(spl_color) != 3)
+	{
+		free_arr(spl_color);
+		return (-1);
+	}
+	if (yb_strcmp(spl_line[0], "F") == 1)
+		yb_init_colors(yback_map, yback_map->f_colors, spl_color);
+	else if (yb_strcmp(spl_line[0], "C") == 1)
+		yb_init_colors(yback_map, yback_map->c_colors, spl_color);
+	if (yb_color_check(yback_map->f_colors) == -1
+		|| yb_color_check(yback_map->c_colors) == -1)
+		error_check = -1;
+
+	free_arr(spl_color);
+	return (error_check);
+}
+
+int	yb_path_color_init(char *line, t_map *yback_map)
+{
+	char	**spl_line;
+	int		error_check;
+
+	error_check = 0;
+	spl_line = ft_split(line, ' ');
+	if (yb_strslen(spl_line) == 2)
+	{
+		if (yb_strcmp(spl_line[0], "F") || yb_strcmp(spl_line[0], "C"))
+			error_check = yb_color_init(spl_line, yback_map);
 		else
-			yb_path_init(yback_map, splitted_line);
+			error_check = yb_path_init(spl_line, yback_map);
 	}
 	else
-	{
-		perror("Error: There are invalid arguments in the file!!!");
-		exit(1);
-	}
+		error_check = -1;
+	free_arr(spl_line);
+	return (error_check);
 }
 
 int	yb_isspace(char c)
@@ -168,17 +193,21 @@ char	*yb_trim(char *line)
 	return (line);
 }
 
-void	yb_done_setting_element(t_map *yback_map)
+char	*yb_done_setting_element(char *line, char *map_line, t_map *yback_map)
 {
+	char	*joined_line;
+
 	if (yback_map->north_path == NULL
 		|| yback_map->south_path == NULL
 		|| yback_map->west_path == NULL
 		|| yback_map->east_path == NULL
 		|| yback_map->flag != 2)
 	{
-		perror("Error: Element missing!\n");
-		exit(1);
-	}	
+		free(line);
+		error_handle("Error: Element missing!\n", map_line, yback_map);
+	}
+	joined_line = ft_strjoin(map_line, line);
+	return (joined_line);
 }
 
 int	yb_find_max_col(t_map *yback_map)
@@ -192,6 +221,7 @@ int	yb_find_max_col(t_map *yback_map)
 	max_len = -1;
 	while (yback_map->map[i])
 	{
+		j = 0;
 		while (yback_map->map[i][j])
 		{
 			if (j > max_len)
@@ -203,35 +233,36 @@ int	yb_find_max_col(t_map *yback_map)
 	return (max_len + 1);
 }
 
-void	yb_map_check_split(char *map_line)
+int	yb_map_check_split(char *map_line)
 {
 	char	**splitted_map;
 	int		line_size;
 	int		i;
+	int		error_check;
 
 	i = -1;
+	error_check = 0;
 	splitted_map = ft_split(map_line, ' ');
 	while (splitted_map[++i])
 	{
 		line_size = ft_strlen(splitted_map[i]);
 		if (splitted_map[i][0] == '0' || splitted_map[i][line_size - 1] == '0')
 		{
-			perror("Error: Wall missing1!\n");
-			exit(1);
+			error_check = -1;
+			break;
 		}
 	}
+	free_arr(splitted_map);
+	return (error_check);
 }
 
-void	yb_wall_check(t_map *yback_map, int i, int j)
+int	yb_wall_check(t_map *yback_map, int i, int j)
 {
 	char	u;
 	char	d;
 
 	if (i == 0 || i == yback_map->map_height - 1)
-	{
-		perror("Error: Wall missing2!\n");
-		exit(1);
-	}
+		return (-1);
 	else
 	{
 		u = yback_map->map[i - 1][j];
@@ -239,14 +270,12 @@ void	yb_wall_check(t_map *yback_map, int i, int j)
 		if (!(u == 'N' || u == 'S' || u == 'E' || u == 'W'
 			|| u == '1' || u == '0' || d == '1' || d == '0'
 			|| d == 'N' || d == 'S' || d == 'E' || d == 'W'))
-		{
-			perror("Error: Wall missing3!\n");
-			exit(1);
-		}
+			return (-1);
 	}
+	return (0);
 }
 
-void	yb_find_player_pos(t_map *yback_map, int i, int j)
+int	yb_find_player_pos(t_map *yback_map, int i, int j)
 {
 	char	c;
 
@@ -254,95 +283,60 @@ void	yb_find_player_pos(t_map *yback_map, int i, int j)
 	if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
 	{
 		if (yback_map->player_pos[0] > 0)
-		{
-			perror("Error: Only one player allowed!\n");
-			exit(1);
-		}
+			return (-1);
 		yback_map->player_dir = c;
 		yback_map->player_pos[0] = i;
 		yback_map->player_pos[1] = j;
-		yb_wall_check(yback_map, i, j);
+		return (yb_wall_check(yback_map, i, j));
 	}
 	else if (!(c == '1' || c == '0' || c == ' '))
-	{
-		perror("Error: Invalid player info!\n");
-		exit(1);
-	}
+		return (-1);
 	else if (c == '0')
-		yb_wall_check(yback_map, i, j);
+		return (yb_wall_check(yback_map, i, j));
+	return (0);
 }
 
-void	yb_find_player(t_map *yback_map)
+int	yb_find_player(t_map *yback_map)
 {
 	int	i;
 	int	j;
+	int	error_check;
 	
 	i = 0;
+	error_check = 0;
 	while (yback_map->map[i])
 	{
-		yb_map_check_split(yback_map->map[i]);
+		error_check = yb_map_check_split(yback_map->map[i]);
+		if (error_check == -1)
+			return (-1);
 		j = 0;
 		while (yback_map->map[i][j])
 		{
-			yb_find_player_pos(yback_map, i, j);
+			error_check = yb_find_player_pos(yback_map, i, j);
+			if (error_check == -1)
+				return (-1);
 			j++;
 		}
 		i++;
 	}
+	return (0);
 }
 
-void	yb_check_info(t_map *yback_map)
+int	yb_check_info(t_map *yback_map)
 {
 	if (yb_strslen(yback_map->map) <= 1)
-	{
-		perror("Error: Invalid map!!");
-		exit(1);
-	}
+		return (-1);
+	return (0);
 }
 
 void	yb_init_map_info(t_map *yback_map, char *map_line)
 {
 	yback_map->map = ft_split(map_line, '\n');
-	free(map_line);
 	yback_map->map_height = yb_strslen(yback_map->map);
 	yback_map->map_width = yb_find_max_col(yback_map);
-	yb_find_player(yback_map);
-	yb_check_info(yback_map);
-}
-
-void	init_map_with_file(char *file_name, t_map *yback_map)
-{
-	int 	fd;
-	char	*line;
-	char	*map_line;
-
-	fd = open(file_name, O_RDONLY);
-	if (fd < 0)
-	{
-		perror("Error: Can't open file.");
-		exit(1);
-	}
-	map_line = malloc(10000);
-	while ((line = get_next_line(fd)) != NULL)
-	{
-		if (line[0] == 'N' || line[0] == 'S' || line[0] == 'W' || line[0] == 'E' || line[0] == 'F' || line[0] == 'C')
-			yb_path_color_init(yback_map, yb_trim(line));
-		else if (line[0] != '\n' && yback_map->flag != -2)
-		{
-			yb_done_setting_element(yback_map);
-			map_line = ft_strjoin(map_line, line);
-		}
-		else if (ft_strlen(map_line) != 0 && ft_strlen(line) == 1)
-			yback_map->flag = -2;
-		else if (line[0] == '\n')
-			continue;
-		else
-		{
-			perror("Error: Element error occured!");
-			exit(1);
-		}
-	}
-	yb_init_map_info(yback_map, map_line);
+	if (yb_find_player(yback_map) == -1 || yb_check_info(yback_map) == -1)
+		error_handle("Error: map error!\n", map_line, yback_map);
+	free(map_line);
 }
 
 void	yb_print_structure(t_map *yback_map)
@@ -370,6 +364,46 @@ void	yb_print_structure(t_map *yback_map)
 	printf("player_dir = %c\n", yback_map->player_dir);
 }
 
+void	init_map_with_file(char *file_name, t_map *yback_map)
+{
+	int 	fd;
+	int		error_check;
+	char	*line;
+	char	*map_line;
+
+	error_check = 0;
+	map_line = malloc(10000);
+	if (!map_line)
+		error_handle("Error: map_line malloc error!\n", map_line, yback_map);
+	fd = open(file_name, O_RDONLY);
+	if (fd < 0)
+		error_handle("Error: Can't open file.", map_line, yback_map);
+	while ((line = get_next_line(fd)) != NULL)
+	{
+		if (line[0] == 'N' || line[0] == 'S' || line[0] == 'W'
+			|| line[0] == 'E' || line[0] == 'F' || line[0] == 'C')
+			error_check = yb_path_color_init(yb_trim(line), yback_map);
+		else if (line[0] != '\n' && yback_map->flag != -2)
+			map_line = yb_done_setting_element(line, map_line, yback_map);
+		else if (ft_strlen(map_line) != 0 && ft_strlen(line) == 1)
+			yback_map->flag = -2;
+		else if (line[0] == '\n')
+		{
+			free(line);
+			continue;
+		}
+		else
+			error_check = -1;
+		if (error_check == -1)
+		{
+			free(line);
+			error_handle("Error: .cub file error!\n", map_line, yback_map);
+		}
+		free(line);
+	}
+	yb_init_map_info(yback_map, map_line);
+}
+
 int main()
 {
 	t_map	*yback_map;
@@ -386,7 +420,7 @@ int main()
 	// init_map_with_file("./maps/e4-empty.cub", yback_map);
 	// init_map_with_file("./maps/e5-more-player.cub", yback_map);
 	// init_map_with_file("./maps/e6-invalid-path.cub", yback_map);
-	// init_map_with_file("./maps/e7-invalid-path2.cub", yback_map); 이거 해결해야함
+	// init_map_with_file("./maps/e7-invalid-path2.cub", yback_map);
 	// init_map_with_file("./maps/e8-color-float.cub", yback_map);
 	// init_map_with_file("./maps/e9-color-out-of-range.cub", yback_map);
 	// init_map_with_file("./maps/e10-color-2num.cub", yback_map);
@@ -394,8 +428,10 @@ int main()
 	// init_map_with_file("./maps/e12-lack-comp2.cub", yback_map);
 	// init_map_with_file("./maps/e13-lack-comp3.cub", yback_map);
 	// init_map_with_file("./maps/e14-more-map.cub", yback_map);
-	// init_map_with_file("./maps/e15-empty-image.cub", yback_map); 이거 해결해야함
-	// init_map_with_file("./maps/s1.cub", yback_map);
+	// init_map_with_file("./maps/e15-empty-image.cub", yback_map);
+	init_map_with_file("./maps/s1.cub", yback_map);
 	// init_map_with_file("./maps/s2.cub", yback_map);
 	yb_print_structure(yback_map);
+	free_yback(yback_map);
+	system("leaks cub3D");
 }
