@@ -3,7 +3,10 @@
 NAME		:=	cub3D
 
 #Source Files
-SOURCES		:=	main.c error_handler.c\
+SOURCES		:=	main.c \
+				error_handler.c \
+				getter_color.c getter_img.c getter_map.c getter_player.c \
+				utils1.c utils2.c
 
 #The Directories, Source, Includes, Dependencies
 TESTDIR		:=	test

@@ -6,7 +6,7 @@
 /*   By: yback <yback@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 15:24:17 by yback             #+#    #+#             */
-/*   Updated: 2023/05/05 19:13:44 by yback            ###   ########seoul.kr  */
+/*   Updated: 2023/05/05 20:04:03 by yback            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,10 @@ void	error_handle(char *msg, char *map_line, t_map *yback_map)
 	free_yback(yback_map);
 	system("leaks cub3D");
 	exit(1);
+}
+
+void	yb_line_error_check(char *line, char *map_line, t_map *yback_map)
+{
+	free(line);
+	error_handle("Error: .cub file error!\n", map_line, yback_map);
 }
