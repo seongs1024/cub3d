@@ -45,10 +45,10 @@ int	key_hook(int key, t_engine *egn)
 	if (key == KEY_W || key == KEY_A || key == KEY_S || key == KEY_D)
 	{
 		/* move camera */
-		render_map(&egn->display, egn->map);
 	}
 	else if (key == KEY_ESCAPE)
 		close_hook(egn);
+	render_map_3d(&egn->display, &egn->cam, egn->map, WINDOW_W, WINDOW_H);
 	mlx_put_image_to_window(egn->ctx, egn->window, egn->display.img, 0, 0);
 	return (0);
 }

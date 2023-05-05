@@ -59,6 +59,21 @@ t_map	*temp_map() {
 	return (&map);
 }
 
+t_camera temp_cam(t_map *map)
+{
+	t_camera	cam;
+
+	cam.pos_x = map->player_pos[0];
+	cam.pos_y = map->player_pos[0];
+	cam.dir_x = -1; // [TODO] replace it w.r.t. player_dir of map
+	cam.dir_y = 0;
+	cam.plane_x = 0;
+	cam.plane_y = 0.66;
+	cam.move_speed = 0.05;
+	cam.rot_speed = 0.05;
+	return (cam);
+}
+
 int	main(void)
 {
 	t_engine	engine;
@@ -73,6 +88,8 @@ int	main(void)
 		&engine.display.bits_per_pixel, \
 		&engine.display.line_length, \
 		&engine.display.endian);
+
+	engine.cam = temp_cam(engine.map);
 
 	mlx_key_hook(engine.window, &key_hook, &engine);
 	mlx_hook(engine.window, EVENT_EXIT, 0, &close_hook, &engine);

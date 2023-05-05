@@ -19,6 +19,7 @@
 # include "key_macos.h"
 # include "map.h"
 # include "display.h"
+# include "camera.h"
 
 typedef struct s_engine
 {
@@ -26,6 +27,7 @@ typedef struct s_engine
 	void		*window;
 	t_map		*map;
 	t_display	display;
+	t_camera	cam;
 }	t_engine;
 
 void	destroy_engine(t_engine *eng);
