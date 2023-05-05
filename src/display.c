@@ -9,6 +9,20 @@ void	pixel_put(t_display *dis, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
+void	pixel_clear(t_display *dis, int width, int height, int color)
+{
+	char	*dst;
+	while (--width >= 0)
+	{
+		int		h = height;
+		while (--h >= 0)
+		{
+			dst = dis->addr + (h * dis->line_length + width * (dis->bits_per_pixel / 8));
+			*(unsigned int*)dst = color;
+		}
+	}
+}
+
 void	render_map(t_display *dis, t_map *map)
 {
 	for (int j = 0; j < map->map_height; j++)
@@ -57,6 +71,7 @@ void	render_map_3d(t_display *dis, t_camera *cam, t_map *map, int width, int hei
 {
 	int	x;
 
+	pixel_clear(dis, width, height, 0x000000);
 	x = 0;
 	while (x < width)
 	{
