@@ -31,6 +31,7 @@ typedef struct s_engine
 }	t_engine;
 
 void	destroy_engine(t_engine *eng);
+int		expose_hook(t_engine *egn);
 int		close_hook(t_engine *egn);
 int		key_hook(int key, t_engine *egn);
 int		frame_loop(t_engine *egn);

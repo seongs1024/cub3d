@@ -32,6 +32,14 @@ void	destroy_engine(t_engine *egn)
 	exit(0);
 }
 
+int	expose_hook(t_engine *egn)
+{
+	printf("EXPOSE!\n");
+	render_map_3d(&egn->display, &egn->cam, egn->map, WINDOW_W, WINDOW_H);
+	mlx_put_image_to_window(egn->ctx, egn->window, egn->display.img, 0, 0);
+	return (0);
+}
+
 int	close_hook(t_engine *egn)
 {
 	printf("EXIT!\n");

@@ -15,6 +15,7 @@
 
 # define EVENT_KEYPRESS		(2)
 # define EVENT_KEYRELEASE	(3)
+# define EVENT_EXPOSE		(12)
 # define EVENT_EXIT			(17)
 
 # define KEY_ESCAPE			(53)
