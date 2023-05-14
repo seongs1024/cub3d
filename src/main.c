@@ -88,7 +88,6 @@ int	main(void)
 	mlx_key_hook(engine.window, &key_hook, &engine);
 	mlx_hook(engine.window, EVENT_EXPOSE, 0, &expose_hook, &engine);
 	mlx_hook(engine.window, EVENT_EXIT, 0, &close_hook, &engine);
-	mlx_loop_hook(engine.ctx, &frame_loop, &engine);
 	mlx_loop(engine.ctx);
 	return (0);
 }
