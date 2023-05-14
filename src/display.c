@@ -1,26 +1,15 @@
 #include <math.h>
 #include "display.h"
 
+#define COLOR_FLOOR		(0xE7B2FE)
+#define COLOR_CEILING	(0xE7B201)
+
 void	pixel_put(t_display *dis, int x, int y, int color)
 {
 	char	*dst;
 
 	dst = dis->addr + (y * dis->line_length + x * (dis->bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
-}
-
-void	pixel_clear(t_display *dis, int width, int height, int color)
-{
-	char	*dst;
-	while (--width >= 0)
-	{
-		int		h = height;
-		while (--h >= 0)
-		{
-			dst = dis->addr + (h * dis->line_length + width * (dis->bits_per_pixel / 8));
-			*(unsigned int*)dst = color;
-		}
-	}
 }
 
 void	render_vertical_line(t_display *dis, int x, int y1, int y2, int color)
@@ -35,11 +24,24 @@ void	render_vertical_line(t_display *dis, int x, int y1, int y2, int color)
 	}
 }
 
+void	render_floor_and_ceiling(t_display *dis, int width, int height)
+{
+	int	x;
+
+	x = 0;
+	while (x < width)
+	{
+		render_vertical_line(dis, x, 0, height / 2, COLOR_CEILING);
+		render_vertical_line(dis, x, height / 2, height - 1, COLOR_FLOOR);
+		x++;
+	}
+}
+
 void	render_map_3d(t_display *dis, t_camera *cam, t_map *map, int width, int height)
 {
 	int	x;
 
-	pixel_clear(dis, width, height, 0x000000);
+	render_floor_and_ceiling(dis, width, height);
 	x = 0;
 	while (x < width)
 	{
