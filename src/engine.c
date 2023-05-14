@@ -71,21 +71,13 @@ int	key_hook(int key, t_engine *egn)
 {
 	printf("KEY STROKE: %d\n", key);
 	if (key == KEY_W)
-	{
-		move_forward(&egn->cam, egn->map);
-	}
+		move(&egn->cam, egn->map, egn->cam.move_speed);
 	else if (key == KEY_S)
-	{
-		move_backward(&egn->cam, egn->map);
-	}
+		move(&egn->cam, egn->map, -egn->cam.move_speed);
 	else if (key == KEY_A)
-	{
-		turn_left(&egn->cam);
-	}
+		turn(&egn->cam, -egn->cam.rot_speed);
 	else if (key == KEY_D)
-	{
-		turn_right(&egn->cam);
-	}
+		turn(&egn->cam, egn->cam.rot_speed);
 	else if (key == KEY_ESCAPE)
 		close_hook(egn);
 	render_map_3d(&egn->display, &egn->cam, egn->map, WINDOW_W, WINDOW_H, egn->textures);

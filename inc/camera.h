@@ -28,9 +28,7 @@ typedef struct s_camera
 }	t_camera;
 
 void	init_cam(t_camera *cam, t_map *map);
-void	move_forward(t_camera *cam, t_map *map);
-void	move_backward(t_camera *cam, t_map *map);
-void	turn_left(t_camera *cam);
-void	turn_right(t_camera *cam);
+void	move(t_camera *cam, t_map *map, double move_speed);
+void	turn(t_camera *cam, double theta);
 
 #endif
