@@ -59,21 +59,6 @@ t_map	*temp_map() {
 	return (&map);
 }
 
-t_camera temp_cam(t_map *map)
-{
-	t_camera	cam;
-
-	cam.pos_x = map->player_pos[1];
-	cam.pos_y = map->player_pos[0];
-	cam.dir_x = 0; // [TODO] replace it w.r.t. player_dir of map
-	cam.dir_y = -1;
-	cam.plane_x = 0.66;
-	cam.plane_y = 0;
-	cam.move_speed = 0.05;
-	cam.rot_speed = 0.05;
-	return (cam);
-}
-
 int	main(void)
 {
 	t_engine	engine;
@@ -89,7 +74,7 @@ int	main(void)
 		&engine.display.line_length, \
 		&engine.display.endian);
 
-	engine.cam = temp_cam(engine.map);
+	init_cam(&engine.cam, engine.map);
 
 	if (load_texture(engine.ctx, engine.map->north_path, &engine.textures[0]) || \
 		load_texture(engine.ctx, engine.map->east_path, &engine.textures[1]) || \
