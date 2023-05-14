@@ -1,8 +1,10 @@
 #include <math.h>
 #include "display.h"
 
-#define COLOR_FLOOR		(0xE7B2FE)
-#define COLOR_CEILING	(0xE7B201)
+int	rgb_to_int(int r, int g, int b)
+{
+	return (r << 16 | g << 8 | b);
+}
 
 void	pixel_put(t_display *dis, int x, int y, int color)
 {
@@ -24,15 +26,15 @@ void	render_vertical_line(t_display *dis, int x, int y1, int y2, int color)
 	}
 }
 
-void	render_floor_and_ceiling(t_display *dis, int width, int height)
+void	render_floor_and_ceiling(t_display *dis, int width, int height, t_map *map)
 {
 	int	x;
 
 	x = 0;
 	while (x < width)
 	{
-		render_vertical_line(dis, x, 0, height / 2, COLOR_CEILING);
-		render_vertical_line(dis, x, height / 2, height - 1, COLOR_FLOOR);
+		render_vertical_line(dis, x, 0, height / 2, rgb_to_int(map->c_colors[0], map->c_colors[1], map->c_colors[2]));
+		render_vertical_line(dis, x, height / 2, height - 1, rgb_to_int(map->f_colors[0], map->f_colors[1], map->f_colors[2]));
 		x++;
 	}
 }
@@ -41,7 +43,7 @@ void	render_map_3d(t_display *dis, t_camera *cam, t_map *map, int width, int hei
 {
 	int	x;
 
-	render_floor_and_ceiling(dis, width, height);
+	render_floor_and_ceiling(dis, width, height, map);
 	x = 0;
 	while (x < width)
 	{
