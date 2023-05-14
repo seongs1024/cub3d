@@ -16,6 +16,7 @@ typedef struct s_display
 	int		height;
 }	t_display;
 
+void	init_display( void *ctx, t_display *dis, int width, int height);
 void	render_map(t_display *dis, t_camera *cam, t_map *map, t_texture *texs);
 
 #endif

@@ -1,5 +1,17 @@
+#include "mlx.h"
 #include "display.h"
 #include "raycaster.h"
+
+void	init_display( void *ctx, t_display *dis, int width, int height)
+{
+	dis->img = mlx_new_image(ctx, width, height);
+	dis->width = width;
+	dis->height = height;
+	dis->addr = mlx_get_data_addr(dis->img, \
+		&dis->bits_per_pixel, \
+		&dis->line_length, \
+		&dis->endian);
+}
 
 void	pixel_put(t_display *dis, int x, int y, int color)
 {

@@ -29,7 +29,7 @@ typedef struct s_engine
 	t_map		*map;
 	t_display	display;
 	t_camera	cam;
-	t_texture	textures[4];
+	t_texture	texs[4];
 }	t_engine;
 
 void	destroy_engine(t_engine *eng);

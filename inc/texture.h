@@ -12,7 +12,7 @@ typedef struct s_texture
 	int		height;
 }   t_texture;
 
-int	load_texture(void *ctx, char *path, t_texture *texture);
+int	init_textures(void *ctx, char **map_path, t_texture *texs);
 int	color(t_texture *texture, int x, int y);
 
 #endif

@@ -10,10 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include "mlx.h"
 #include "engine.h"
-
-#include <stdlib.h>
 
 t_map	*temp_map() {
 	static char *maps[] = {
@@ -68,25 +67,14 @@ int	main(void)
 
 	engine.map = temp_map();
 
-	engine.display.img = mlx_new_image(engine.ctx, WINDOW_W, WINDOW_H);
-	engine.display.width = WINDOW_W;
-	engine.display.height = WINDOW_H;
-	engine.display.addr = mlx_get_data_addr(engine.display.img, \
-		&engine.display.bits_per_pixel, \
-		&engine.display.line_length, \
-		&engine.display.endian);
-
+	init_display(engine.ctx, &engine.display, WINDOW_W, WINDOW_H);
 	init_cam(&engine.cam, engine.map);
-
-	if (load_texture(engine.ctx, engine.map->north_path, &engine.textures[0]) || \
-		load_texture(engine.ctx, engine.map->east_path, &engine.textures[1]) || \
-		load_texture(engine.ctx, engine.map->south_path, &engine.textures[2]) || \
-		load_texture(engine.ctx, engine.map->west_path, &engine.textures[3]))
+	if (init_textures(engine.ctx, &engine.map->north_path, engine.texs))
 	{
+		printf("Error\nCannot load textures!\n");
 		destroy_engine(&engine);
 		return (1);
 	}
-
 	mlx_key_hook(engine.window, &key_hook, &engine);
 	mlx_hook(engine.window, EVENT_EXPOSE, 0, &expose_hook, &engine);
 	mlx_hook(engine.window, EVENT_EXIT, 0, &close_hook, &engine);

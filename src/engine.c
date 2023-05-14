@@ -19,14 +19,14 @@ void	destroy_engine(t_engine *egn)
 {
 	if (egn->display.img)
 		mlx_destroy_image(egn->ctx, egn->display.img);
-	if (egn->textures[0].img)
-		mlx_destroy_image(egn->ctx, egn->textures[0].img);
-	if (egn->textures[1].img)
-		mlx_destroy_image(egn->ctx, egn->textures[1].img);
-	if (egn->textures[2].img)
-		mlx_destroy_image(egn->ctx, egn->textures[2].img);
-	if (egn->textures[3].img)
-		mlx_destroy_image(egn->ctx, egn->textures[3].img);
+	if (egn->texs[0].img)
+		mlx_destroy_image(egn->ctx, egn->texs[0].img);
+	if (egn->texs[1].img)
+		mlx_destroy_image(egn->ctx, egn->texs[1].img);
+	if (egn->texs[2].img)
+		mlx_destroy_image(egn->ctx, egn->texs[2].img);
+	if (egn->texs[3].img)
+		mlx_destroy_image(egn->ctx, egn->texs[3].img);
 	if (egn->window)
 		mlx_destroy_window(egn->ctx, egn->window);
 	exit(0);
@@ -34,7 +34,7 @@ void	destroy_engine(t_engine *egn)
 
 int	expose_hook(t_engine *egn)
 {
-	render_map(&egn->display, &egn->cam, egn->map, egn->textures);
+	render_map(&egn->display, &egn->cam, egn->map, egn->texs);
 	mlx_put_image_to_window(egn->ctx, egn->window, egn->display.img, 0, 0);
 	return (0);
 }
@@ -57,7 +57,7 @@ int	key_hook(int key, t_engine *egn)
 		turn(&egn->cam, egn->cam.rot_speed);
 	else if (key == KEY_ESCAPE)
 		close_hook(egn);
-	render_map(&egn->display, &egn->cam, egn->map, egn->textures);
+	render_map(&egn->display, &egn->cam, egn->map, egn->texs);
 	mlx_put_image_to_window(egn->ctx, egn->window, egn->display.img, 0, 0);
 	return (0);
 }
