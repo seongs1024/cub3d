@@ -7,6 +7,7 @@ SOURCES		:=	main.c \
 				engine.c \
 				display.c \
 				camera.c \
+				texture.c \
 
 #The Directories, Source, Includes, Dependencies
 TESTDIR		:=	test
@@ -87,7 +88,7 @@ $(NAME): $(OBJS)
 ifeq ($(TARGET), .a)
 	$(AR) -rc $@ $^
 else
-	$(CC) $(MLXFLAG) $(SANITIZE) $(DEBUG) $(INC) -o $(NAME) $^ $(LID) $(LIB)
+	$(CC) $(SANITIZE) $(DEBUG) $(INC) -o $(NAME) $^ $(LID) $(LIB) $(MLXFLAG)
 endif
 
 #Compile

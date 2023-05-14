@@ -23,6 +23,26 @@ void	destroy_engine(t_engine *egn)
 		mlx_destroy_image(egn->ctx, egn->display.img);
 		egn->display.img = 0;
 	}
+	if (egn->textures[0].img)
+	{
+		mlx_destroy_image(egn->ctx, egn->textures[0].img);
+		egn->textures[0].img = 0;
+	}
+	if (egn->textures[1].img)
+	{
+		mlx_destroy_image(egn->ctx, egn->textures[1].img);
+		egn->textures[1].img = 0;
+	}
+	if (egn->textures[2].img)
+	{
+		mlx_destroy_image(egn->ctx, egn->textures[2].img);
+		egn->textures[2].img = 0;
+	}
+	if (egn->textures[3].img)
+	{
+		mlx_destroy_image(egn->ctx, egn->textures[3].img);
+		egn->textures[3].img = 0;
+	}
 	if (egn->window)
 	{
 		mlx_destroy_window(egn->ctx, egn->window);
@@ -35,7 +55,7 @@ void	destroy_engine(t_engine *egn)
 int	expose_hook(t_engine *egn)
 {
 	printf("EXPOSE!\n");
-	render_map_3d(&egn->display, &egn->cam, egn->map, WINDOW_W, WINDOW_H);
+	render_map_3d(&egn->display, &egn->cam, egn->map, WINDOW_W, WINDOW_H, egn->textures);
 	mlx_put_image_to_window(egn->ctx, egn->window, egn->display.img, 0, 0);
 	return (0);
 }
@@ -68,7 +88,7 @@ int	key_hook(int key, t_engine *egn)
 	}
 	else if (key == KEY_ESCAPE)
 		close_hook(egn);
-	render_map_3d(&egn->display, &egn->cam, egn->map, WINDOW_W, WINDOW_H);
+	render_map_3d(&egn->display, &egn->cam, egn->map, WINDOW_W, WINDOW_H, egn->textures);
 	mlx_put_image_to_window(egn->ctx, egn->window, egn->display.img, 0, 0);
 	return (0);
 }

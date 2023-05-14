@@ -91,6 +91,15 @@ int	main(void)
 
 	engine.cam = temp_cam(engine.map);
 
+	if (load_texture(engine.ctx, engine.map->north_path, &engine.textures[0]) || \
+		load_texture(engine.ctx, engine.map->east_path, &engine.textures[1]) || \
+		load_texture(engine.ctx, engine.map->south_path, &engine.textures[2]) || \
+		load_texture(engine.ctx, engine.map->west_path, &engine.textures[3]))
+	{
+		destroy_engine(&engine);
+		return (1);
+	}
+
 	mlx_key_hook(engine.window, &key_hook, &engine);
 	mlx_hook(engine.window, EVENT_EXPOSE, 0, &expose_hook, &engine);
 	mlx_hook(engine.window, EVENT_EXIT, 0, &close_hook, &engine);

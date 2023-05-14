@@ -37,7 +37,7 @@ void	render_floor_and_ceiling(t_display *dis, int width, int height)
 	}
 }
 
-void	render_map_3d(t_display *dis, t_camera *cam, t_map *map, int width, int height)
+void	render_map_3d(t_display *dis, t_camera *cam, t_map *map, int width, int height, t_texture *texs)
 {
 	int	x;
 
@@ -140,19 +140,33 @@ void	render_map_3d(t_display *dis, t_camera *cam, t_map *map, int width, int hei
 		if(draw_end >= height)
 			draw_end = height - 1;
 
-		int	color;
-		if (side == 0)
-			color = 0xFF0000;
-		else if (side == 1)
-			color = 0x00FF00;
-		else if (side == 2)
-			color = 0x0000FF;
-		else if (side == 3)
-			color = 0xFFFF00;
+		// calculate value of wall_x
+		double wall_x;
+		if (side == 3 || side == 1)
+			wall_x = cam->pos_y + perp_wall_dist * ray_dir_y;
 		else
-			color = 0xFFFFFF;
+			wall_x = cam->pos_x + perp_wall_dist * ray_dir_x;
+		wall_x -= floor(wall_x);
 
-		render_vertical_line(dis, x, draw_start, draw_end, color);
+		// x coordinate on the texture
+		int tex_x = (int)(wall_x * (double)texs[side].width);
+		if ((side == 3 || side == 1) && ray_dir_x < 0)
+			tex_x = texs[side].width - tex_x - 1;
+		if ((side == 0 || side == 2) && ray_dir_y > 0)
+			tex_x = texs[side].width - tex_x - 1;
+
+		// How much to increase the texture coordinate perscreen pixel
+		double step = 1.0 * texs[side].height / line_height;
+		// Starting texture coordinate
+		double tex_pos = (draw_start - height / 2 + line_height / 2) * step;
+		for (int y = draw_start; y < draw_end; y++)
+		{
+			// Cast the texture coordinate to integer, and mask with (texs[side].height - 1) in case of overflow
+			int tex_y = (int)tex_pos & (texs[side].height - 1);
+			tex_pos += step;
+			int color = texs[side].addr[texs[side].height * tex_y + tex_x];
+			pixel_put(dis, x, y, color);
+		}
 		
 		x++;
 	}
