@@ -55,8 +55,16 @@ void	render_map_3d(t_display *dis, t_camera *cam, t_map *map, int width, int hei
 		double side_dist_y;
 		
 		 //length of ray from one x or y-side to next x or y-side
-		double delta_dist_x = fabs(1 / ray_dir_x);
-		double delta_dist_y = fabs(1 / ray_dir_y);
+		double delta_dist_x;
+		if (ray_dir_x != 0)
+			delta_dist_x = fabs(1 / ray_dir_x);
+		else
+			delta_dist_x = 1e30;
+		double delta_dist_y;
+		if (ray_dir_y != 0)
+			delta_dist_y = fabs(1 / ray_dir_y);
+		else
+			delta_dist_y = 1e30;
 		double perp_wall_dist;
 		
 		//what direction to step in x or y-direction (either +1 or -1)
@@ -74,7 +82,7 @@ void	render_map_3d(t_display *dis, t_camera *cam, t_map *map, int width, int hei
 		else
 		{
 			step_x = 1;
-			side_dist_x = (map_x + 1.0 - cam->pos_y) * delta_dist_x;
+			side_dist_x = (map_x + 1.0 - cam->pos_x) * delta_dist_x;
 		}
 		if (ray_dir_y < 0)
 		{
@@ -94,21 +102,30 @@ void	render_map_3d(t_display *dis, t_camera *cam, t_map *map, int width, int hei
 			{
 				side_dist_x += delta_dist_x;
 				map_x += step_x;
-				side = 0;
+				if (ray_dir_x < 0)
+					side = 3;
+				else
+					side = 1;
 			}
 			else
 			{
 				side_dist_y += delta_dist_y;
 				map_y += step_y;
-				side = 1;
+				if (ray_dir_y < 0)
+					side = 0;
+				else
+					side = 2;
 			}
 			//Check if ray has hit a wall
-			if (map->map[map_x][map_y] != '0') hit = 1;
+			// [TODO]: out of indexing
+			if (map->map[map_y][map_x] == '1')
+				hit = 1;
 		}
-		if (side == 0)
-			perp_wall_dist = (map_x - cam->pos_x + (1 - step_x) / 2) / ray_dir_x;
+		// ref: https://chichoon.tistory.com/m/429
+		if (side == 3 || side == 1)
+			perp_wall_dist = side_dist_x - delta_dist_x; //((map_x - cam->pos_x + (1 - step_x) / 2) / ray_dir_x);
 		else
-			perp_wall_dist = (map_y - cam->pos_y + (1 - step_y) / 2) / ray_dir_y;
+			perp_wall_dist = side_dist_y - delta_dist_y; // ((map_y - cam->pos_y + (1 - step_y) / 2) / ray_dir_y);
 
 		//Calculate height of line to draw on screen
 		int line_height = (int)(height / perp_wall_dist);
@@ -120,24 +137,18 @@ void	render_map_3d(t_display *dis, t_camera *cam, t_map *map, int width, int hei
 		int draw_end = line_height / 2 + height / 2;
 		if(draw_end >= height)
 			draw_end = height - 1;
-		if (map_x >= map->map_width)
-			map_x = map->map_width - 1;
-		if (map_y >= map->map_height)
-			map_y = map->map_height - 1;
-		if (map_x < 0)
-			map_x = 0;
-		if (map_y < 0)
-			map_y = 0;
+
 		int	color;
-		if (map->map[map_y][map_x] == '1')
+		if (side == 0)
 			color = 0xFF0000;
-		else if (map->map[map_y][map_x] == 'N')
-			color = 0xFF00FF;
+		else if (side == 1)
+			color = 0x00FF00;
+		else if (side == 2)
+			color = 0x0000FF;
+		else if (side == 3)
+			color = 0xFFFF00;
 		else
 			color = 0xFFFFFF;
-		
-		if (side == 1)
-			color = color / 2;
 
 		render_vertical_line(dis, x, draw_start, draw_end, color);
 		
