@@ -13,3 +13,8 @@ int	load_texture(void *ctx, char *path, t_texture *texture)
 		&texture->endian);
 	return (0);
 }
+
+int	color(t_texture *texture, int x, int y)
+{
+	return (texture->addr[texture->height * y + x]);
+}

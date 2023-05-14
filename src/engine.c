@@ -34,7 +34,7 @@ void	destroy_engine(t_engine *egn)
 
 int	expose_hook(t_engine *egn)
 {
-	render_map_3d(&egn->display, &egn->cam, egn->map, WINDOW_W, WINDOW_H, egn->textures);
+	render_map(&egn->display, &egn->cam, egn->map, egn->textures);
 	mlx_put_image_to_window(egn->ctx, egn->window, egn->display.img, 0, 0);
 	return (0);
 }
@@ -57,7 +57,7 @@ int	key_hook(int key, t_engine *egn)
 		turn(&egn->cam, egn->cam.rot_speed);
 	else if (key == KEY_ESCAPE)
 		close_hook(egn);
-	render_map_3d(&egn->display, &egn->cam, egn->map, WINDOW_W, WINDOW_H, egn->textures);
+	render_map(&egn->display, &egn->cam, egn->map, egn->textures);
 	mlx_put_image_to_window(egn->ctx, egn->window, egn->display.img, 0, 0);
 	return (0);
 }

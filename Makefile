@@ -8,6 +8,7 @@ SOURCES		:=	main.c \
 				display.c \
 				camera.c \
 				texture.c \
+				raycaster.c \
 
 #The Directories, Source, Includes, Dependencies
 TESTDIR		:=	test

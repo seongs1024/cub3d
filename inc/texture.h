@@ -13,5 +13,6 @@ typedef struct s_texture
 }   t_texture;
 
 int	load_texture(void *ctx, char *path, t_texture *texture);
+int	color(t_texture *texture, int x, int y);
 
 #endif

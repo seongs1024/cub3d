@@ -69,6 +69,8 @@ int	main(void)
 	engine.map = temp_map();
 
 	engine.display.img = mlx_new_image(engine.ctx, WINDOW_W, WINDOW_H);
+	engine.display.width = WINDOW_W;
+	engine.display.height = WINDOW_H;
 	engine.display.addr = mlx_get_data_addr(engine.display.img, \
 		&engine.display.bits_per_pixel, \
 		&engine.display.line_length, \
