@@ -37,7 +37,7 @@ void	init_cam(t_camera *cam, t_map *map)
 	cam->rot_speed = 0.05;
 }
 
-void	move(t_camera *cam, t_map *map, double move_speed)
+void	move_fb(t_camera *cam, t_map *map, double move_speed)
 {
 	int	y;
 	int	x;
@@ -50,6 +50,27 @@ void	move(t_camera *cam, t_map *map, double move_speed)
 	x = (int)(cam->pos_x);
 	if (map->map[y][x] != '1')
 		cam->pos_y += cam->dir_y * move_speed;
+}
+
+void	move_lr(t_camera *cam, t_map *map, double theta)
+{
+	double	turn_dir_x;
+	double	turn_dir_y;
+	int		y;
+	int		x;
+
+	turn_dir_x = cam->dir_x * cos(theta) - cam->dir_y * sin(theta);
+	turn_dir_y = cam->dir_x * sin(theta) + cam->dir_y * cos(theta);
+	y = (int)(cam->pos_y);
+	x = (int)(cam->pos_x + turn_dir_x * cam->move_speed);
+	if ((y >= 0 && y < map->map_height && x >= 0 && x < map->map_width) && \
+		map->map[y][x] != '1')
+		cam->pos_x += turn_dir_x * cam->move_speed;
+	y = (int)(cam->pos_y + turn_dir_y * cam->move_speed);
+	x = (int)(cam->pos_x);
+	if ((y >= 0 && y < map->map_height && x >= 0 && x < map->map_width) && \
+		map->map[y][x] != '1')
+		cam->pos_y += turn_dir_y * cam->move_speed;
 }
 
 void	turn(t_camera *cam, double theta)

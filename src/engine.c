@@ -15,6 +15,8 @@
 #include "mlx.h"
 #include "engine.h"
 
+#define DEGREE_90 (1.57079633)
+
 void	destroy_engine(t_engine *egn)
 {
 	if (egn->display.img)
@@ -50,12 +52,16 @@ int	close_hook(t_engine *egn)
 int	key_hook(int key, t_engine *egn)
 {
 	if (key == KEY_W)
-		move(&egn->cam, egn->map, egn->cam.move_speed);
+		move_fb(&egn->cam, egn->map, egn->cam.move_speed);
 	else if (key == KEY_S)
-		move(&egn->cam, egn->map, -egn->cam.move_speed);
+		move_fb(&egn->cam, egn->map, -egn->cam.move_speed);
 	else if (key == KEY_A)
-		turn(&egn->cam, -egn->cam.rot_speed);
+		move_lr(&egn->cam, egn->map, -DEGREE_90);
 	else if (key == KEY_D)
+		move_lr(&egn->cam, egn->map, DEGREE_90);
+	else if (key == KEY_LEFT)
+		turn(&egn->cam, -egn->cam.rot_speed);
+	else if (key == KEY_RIGHT)
 		turn(&egn->cam, egn->cam.rot_speed);
 	else if (key == KEY_ESCAPE)
 		close_hook(egn);

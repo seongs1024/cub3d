@@ -28,7 +28,8 @@ typedef struct s_camera
 }	t_camera;
 
 void	init_cam(t_camera *cam, t_map *map);
-void	move(t_camera *cam, t_map *map, double move_speed);
+void	move_fb(t_camera *cam, t_map *map, double move_speed);
+void	move_lr(t_camera *cam, t_map *map, double theta);
 void	turn(t_camera *cam, double theta);
 
 #endif
