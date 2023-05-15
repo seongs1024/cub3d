@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   raycaster.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: seongspa <seongspa@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/15 13:31:02 by seongspa          #+#    #+#             */
+/*   Updated: 2023/05/15 13:32:12 by seongspa         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef RAYCASTER_H
 # define RAYCASTER_H
 
@@ -19,7 +31,7 @@ typedef struct s_raycaster
 	int		tex[2];
 }	t_raycaster;
 
-void    cast_ray(t_raycaster *rc, t_camera *cam, int x, t_display *dis);
+void	cast_ray(t_raycaster *rc, t_camera *cam, int x, t_display *dis);
 int		hit_wall(t_raycaster *rc, t_map *map);
 void	measure_vline(t_raycaster *rc, int wall, t_display *dis);
 void	measure_tex(t_raycaster *rc, int wall, t_texture *tex, t_camera *cam);

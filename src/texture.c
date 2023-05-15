@@ -1,13 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   texture.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: seongspa <seongspa@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/15 13:30:34 by seongspa          #+#    #+#             */
+/*   Updated: 2023/05/15 13:39:51 by seongspa         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "mlx.h"
 #include "texture.h"
 
 int	load_texture(void *ctx, char *path, t_texture *texture)
 {
-	texture->img = mlx_xpm_file_to_image(ctx, path, &texture->width, &texture->height);
+	texture->img = mlx_xpm_file_to_image(ctx, path, \
+		&texture->width, &texture->height);
 	if (!texture->img)
 		return (-1);
-	texture->addr = (int *)mlx_get_data_addr(
-		texture->img, \
+	texture->addr = (int *)mlx_get_data_addr(texture->img, \
 		&texture->bits_per_pixel, \
 		&texture->line_length, \
 		&texture->endian);

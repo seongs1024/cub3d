@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   camera.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: seongspa <seongspa@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/15 13:30:09 by seongspa          #+#    #+#             */
+/*   Updated: 2023/05/15 13:34:04 by seongspa         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <math.h>
 #include "camera.h"
 
@@ -25,7 +37,7 @@ void	init_cam(t_camera *cam, t_map *map)
 	cam->rot_speed = 0.05;
 }
 
-void    move(t_camera *cam, t_map *map, double move_speed)
+void	move(t_camera *cam, t_map *map, double move_speed)
 {
 	int	y;
 	int	x;
@@ -40,12 +52,15 @@ void    move(t_camera *cam, t_map *map, double move_speed)
 		cam->pos_y += cam->dir_y * move_speed;
 }
 
-void    turn(t_camera *cam, double theta)
+void	turn(t_camera *cam, double theta)
 {
-	double old_dir_x = cam->dir_x;
+	double	old_dir_x;
+	double	old_plane_x;
+
+	old_dir_x = cam->dir_x;
 	cam->dir_x = cam->dir_x * cos(theta) - cam->dir_y * sin(theta);
 	cam->dir_y = old_dir_x * sin(theta) + cam->dir_y * cos(theta);
-	double old_plane_x = cam->plane_x;
+	old_plane_x = cam->plane_x;
 	cam->plane_x = cam->plane_x * cos(theta) - cam->plane_y * sin(theta);
 	cam->plane_y = old_plane_x * sin(theta) + cam->plane_y * cos(theta);
 }

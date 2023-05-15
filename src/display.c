@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   display.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: seongspa <seongspa@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/15 13:30:16 by seongspa          #+#    #+#             */
+/*   Updated: 2023/05/15 13:35:32 by seongspa         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "mlx.h"
 #include "display.h"
 #include "raycaster.h"
@@ -18,7 +30,7 @@ void	pixel_put(t_display *dis, int x, int y, int color)
 	char	*dst;
 
 	dst = dis->addr + (y * dis->line_length + x * (dis->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
+	*(unsigned int *)dst = color;
 }
 
 void	render_floor_and_ceiling(t_display *dis, t_map *map)
@@ -32,7 +44,7 @@ void	render_floor_and_ceiling(t_display *dis, t_map *map)
 		y = 0;
 		while (y < (int)(dis->height / 2))
 		{
-			pixel_put(dis, x, y, 
+			pixel_put(dis, x, y, \
 				map->c_colors[0] << 16 | \
 				map->c_colors[1] << 8 | \
 				map->c_colors[2]);
@@ -40,7 +52,7 @@ void	render_floor_and_ceiling(t_display *dis, t_map *map)
 		}
 		while (y < dis->height)
 		{
-			pixel_put(dis, x, y, 
+			pixel_put(dis, x, y, \
 				map->f_colors[0] << 16 | \
 				map->f_colors[1] << 8 | \
 				map->f_colors[2]);

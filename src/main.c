@@ -6,7 +6,7 @@
 /*   By: seongspa <seongspa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 15:37:43 by yback             #+#    #+#             */
-/*   Updated: 2023/05/15 13:19:42 by seongspa         ###   ########.fr       */
+/*   Updated: 2023/05/15 13:37:40 by seongspa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char	*yb_reading_file(int fd, t_map *yback_map, char *map_line)
 		else if (line[0] == '\n')
 		{
 			free(line);
-			continue;
+			continue ;
 		}
 		else
 			error_check = -1;
@@ -76,7 +76,7 @@ char	*yb_reading_file(int fd, t_map *yback_map, char *map_line)
 
 void	init_map_with_file(char *file_name, t_map *yback_map)
 {
-	int 	fd;
+	int		fd;
 	char	*map_line;
 
 	map_line = malloc(10000);
@@ -127,9 +127,7 @@ int	main(void)
 
 	engine.ctx = mlx_init();
 	engine.window = mlx_new_window(engine.ctx, WINDOW_W, WINDOW_H, "cub3D");
-
 	engine.map = generate_map("maps/s2.cub");
-
 	init_display(engine.ctx, &engine.display, WINDOW_W, WINDOW_H);
 	init_cam(&engine.cam, engine.map);
 	if (init_textures(engine.ctx, &engine.map->north_path, engine.texs))
