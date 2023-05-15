@@ -6,7 +6,12 @@ NAME		:=	cub3D
 SOURCES		:=	main.c \
 				error_handler.c \
 				getter_color.c getter_img.c getter_map.c getter_player.c \
-				utils1.c utils2.c
+				utils1.c utils2.c \
+				engine.c \
+				display.c \
+				camera.c \
+				texture.c \
+				raycaster.c \
 
 #The Directories, Source, Includes, Dependencies
 TESTDIR		:=	test
@@ -88,7 +93,7 @@ $(NAME): $(OBJS)
 ifeq ($(TARGET), .a)
 	$(AR) -rc $@ $^
 else
-	$(CC) $(MLXFLAG) $(SANITIZE) $(DEBUG) $(INC) -o $(NAME) $^ $(LID) $(LIB)
+	$(CC) $(SANITIZE) $(DEBUG) $(INC) -o $(NAME) $^ $(LID) $(LIB) $(MLXFLAG)
 endif
 
 #Compile

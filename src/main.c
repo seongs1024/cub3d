@@ -3,14 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yback <yback@student.42.fr>                +#+  +:+       +#+        */
+/*   By: seongspa <seongspa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 15:37:43 by yback             #+#    #+#             */
-/*   Updated: 2023/05/05 20:07:12 by yback            ###   ########seoul.kr  */
+/*   Updated: 2023/05/15 13:19:42 by seongspa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
+#include "mlx.h"
 #include "map.h"
+#include "engine.h"
 
 int	yb_path_color_init(char *line, t_map *yback_map)
 {
@@ -86,7 +89,7 @@ void	init_map_with_file(char *file_name, t_map *yback_map)
 	yb_init_map_info(yback_map, map_line);
 }
 
-int main()
+t_map	*generate_map(char *file_name)
 {
 	t_map	*yback_map;
 
@@ -112,8 +115,32 @@ int main()
 	// init_map_with_file("./maps/e14-more-map.cub", yback_map);
 	// init_map_with_file("./maps/e15-empty-image.cub", yback_map);
 	// init_map_with_file("./maps/s1.cub", yback_map);
-	init_map_with_file("./maps/s2.cub", yback_map);
-	yb_print_structure(yback_map);
-	free_yback(yback_map);
-	system("leaks cub3D");
+	init_map_with_file(file_name, yback_map);
+	// yb_print_structure(yback_map);
+	// free_yback(yback_map);
+	return (yback_map);
+}
+
+int	main(void)
+{
+	t_engine	engine;
+
+	engine.ctx = mlx_init();
+	engine.window = mlx_new_window(engine.ctx, WINDOW_W, WINDOW_H, "cub3D");
+
+	engine.map = generate_map("maps/s2.cub");
+
+	init_display(engine.ctx, &engine.display, WINDOW_W, WINDOW_H);
+	init_cam(&engine.cam, engine.map);
+	if (init_textures(engine.ctx, &engine.map->north_path, engine.texs))
+	{
+		printf("Error\nCannot load textures!\n");
+		destroy_engine(&engine);
+		return (1);
+	}
+	mlx_key_hook(engine.window, &key_hook, &engine);
+	mlx_hook(engine.window, EVENT_EXPOSE, 0, &expose_hook, &engine);
+	mlx_hook(engine.window, EVENT_EXIT, 0, &close_hook, &engine);
+	mlx_loop(engine.ctx);
+	return (0);
 }
