@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seongspa <seongspa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yback <yback@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 19:45:42 by seongspa          #+#    #+#             */
-/*   Updated: 2023/05/15 13:35:49 by seongspa         ###   ########.fr       */
+/*   Updated: 2023/05/15 14:59:19 by yback            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ void	destroy_engine(t_engine *egn)
 		mlx_destroy_image(egn->ctx, egn->texs[3].img);
 	if (egn->window)
 		mlx_destroy_window(egn->ctx, egn->window);
-	// if (egn->map)
-	// 	free_yback(egn->map);
+	if (egn->map)
+		free_yback(egn->map);
 	system("leaks cub3D");
 	exit(0);
 }

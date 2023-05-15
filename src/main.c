@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seongspa <seongspa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yback <yback@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 15:37:43 by yback             #+#    #+#             */
-/*   Updated: 2023/05/15 13:37:40 by seongspa         ###   ########.fr       */
+/*   Updated: 2023/05/15 15:05:39 by yback            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	yb_init_map_info(t_map *yback_map, char *map_line)
 	yback_map->map_height = yb_strslen(yback_map->map);
 	yback_map->map_width = yb_find_max_col(yback_map);
 	if (yb_find_player(yback_map) == -1 || yb_check_info(yback_map) == -1)
-		error_handle("Error: map error!\n", map_line, yback_map);
+		error_handle("Error\nmap error!\n", map_line, yback_map);
 	free(map_line);
 }
 
@@ -51,20 +51,19 @@ char	*yb_reading_file(int fd, t_map *yback_map, char *map_line)
 	int		error_check;
 
 	error_check = 0;
-	while ((line = get_next_line(fd)) != NULL)
+	while (1)
 	{
-		if (line[0] == 'N' || line[0] == 'S' || line[0] == 'W'
-			|| line[0] == 'E' || line[0] == 'F' || line[0] == 'C')
+		line = get_next_line(fd);
+		if (line == NULL)
+			break ;
+		if (ft_strchr("NSWEFC", line[0]))
 			error_check = yb_path_color_init(yb_trim(line), yback_map);
 		else if (line[0] != '\n' && yback_map->flag != -2)
 			map_line = yb_done_setting_element(line, map_line, yback_map);
 		else if (ft_strlen(map_line) != 0 && ft_strlen(line) == 1)
 			yback_map->flag = -2;
-		else if (line[0] == '\n')
-		{
-			free(line);
+		else if (line[0] == '\n' && fnull(line))
 			continue ;
-		}
 		else
 			error_check = -1;
 		if (error_check == -1)
@@ -79,60 +78,33 @@ void	init_map_with_file(char *file_name, t_map *yback_map)
 	int		fd;
 	char	*map_line;
 
-	map_line = malloc(10000);
+	map_line = malloc(TMP_MEM);
 	if (!map_line)
-		error_handle("Error: map_line malloc error!\n", map_line, yback_map);
+		error_handle("Error\nmap_line malloc error!\n", map_line, yback_map);
 	fd = open(file_name, O_RDONLY);
 	if (fd < 0)
-		error_handle("Error: Can't open file.", map_line, yback_map);
+		error_handle("Error\nCan't open file.\n", map_line, yback_map);
 	map_line = yb_reading_file(fd, yback_map, map_line);
 	yb_init_map_info(yback_map, map_line);
 }
 
-t_map	*generate_map(char *file_name)
-{
-	t_map	*yback_map;
-
-	yback_map = malloc(sizeof(t_map));
-	if (!yback_map)
-	{
-		perror("Error: malloc");
-		exit(1);
-	}
-	// init_map_with_file("./maps/e1-invalid-char-in-map.cub", yback_map);
-	// init_map_with_file("./maps/e2-no-wall.cub", yback_map);
-	// init_map_with_file("./maps/e3-no-wall2.cub", yback_map);
-	// init_map_with_file("./maps/e4-empty.cub", yback_map);
-	// init_map_with_file("./maps/e5-more-player.cub", yback_map);
-	// init_map_with_file("./maps/e6-invalid-path.cub", yback_map);
-	// init_map_with_file("./maps/e7-invalid-path2.cub", yback_map);
-	// init_map_with_file("./maps/e8-color-float.cub", yback_map);
-	// init_map_with_file("./maps/e9-color-out-of-range.cub", yback_map);
-	// init_map_with_file("./maps/e10-color-2num.cub", yback_map);
-	// init_map_with_file("./maps/e11-lack-comp.cub", yback_map);
-	// init_map_with_file("./maps/e12-lack-comp2.cub", yback_map);
-	// init_map_with_file("./maps/e13-lack-comp3.cub", yback_map);
-	// init_map_with_file("./maps/e14-more-map.cub", yback_map);
-	// init_map_with_file("./maps/e15-empty-image.cub", yback_map);
-	// init_map_with_file("./maps/s1.cub", yback_map);
-	init_map_with_file(file_name, yback_map);
-	// yb_print_structure(yback_map);
-	// free_yback(yback_map);
-	return (yback_map);
-}
-
-int	main(void)
+int	main(int argc, char *argv[])
 {
 	t_engine	engine;
 
+	if (argc != 2 || argv[1] == NULL || argv[1][0] == '\0')
+	{
+		perror("Error\nInvalid arguments!\n");
+		exit(1);
+	}
 	engine.ctx = mlx_init();
 	engine.window = mlx_new_window(engine.ctx, WINDOW_W, WINDOW_H, "cub3D");
-	engine.map = generate_map("maps/s2.cub");
+	engine.map = generate_map(argv[1]);
 	init_display(engine.ctx, &engine.display, WINDOW_W, WINDOW_H);
 	init_cam(&engine.cam, engine.map);
 	if (init_textures(engine.ctx, &engine.map->north_path, engine.texs))
 	{
-		printf("Error\nCannot load textures!\n");
+		perror("Error\nCannot load textures!\n");
 		destroy_engine(&engine);
 		return (1);
 	}

@@ -6,7 +6,7 @@
 /*   By: yback <yback@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 19:28:36 by yback             #+#    #+#             */
-/*   Updated: 2023/05/05 19:38:31 by yback            ###   ########seoul.kr  */
+/*   Updated: 2023/05/15 14:05:14 by yback            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	yb_strcmp(char *s1, char *s2)
 	int	i;
 
 	i = 0;
-
 	if (ft_strlen(s1) != ft_strlen(s2))
 		return (0);
 	while (s1[i] && s2[i])

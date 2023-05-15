@@ -6,7 +6,7 @@
 /*   By: yback <yback@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 19:36:00 by yback             #+#    #+#             */
-/*   Updated: 2023/05/05 19:38:20 by yback            ###   ########seoul.kr  */
+/*   Updated: 2023/05/15 14:01:54 by yback            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ int	yb_color_init(char **spl_line, t_map *yback_map)
 	if (yb_color_check(yback_map->f_colors) == -1
 		|| yb_color_check(yback_map->c_colors) == -1)
 		error_check = -1;
-
 	free_arr(spl_color);
 	return (error_check);
 }

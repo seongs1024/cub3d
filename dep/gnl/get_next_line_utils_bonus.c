@@ -6,14 +6,14 @@
 /*   By: yback <yback@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 19:24:53 by yback             #+#    #+#             */
-/*   Updated: 2023/05/03 23:07:43 by yback            ###   ########seoul.kr  */
+/*   Updated: 2023/05/15 15:14:42 by yback            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "get_next_line_bonus.h"
-char	*free_null(char **arr);
 
+char	*free_null(char **arr);
 
 size_t	ft_strlen(const char *str)
 {

@@ -6,7 +6,7 @@
 /*   By: yback <yback@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 19:33:57 by yback             #+#    #+#             */
-/*   Updated: 2023/05/05 19:38:23 by yback            ###   ########seoul.kr  */
+/*   Updated: 2023/05/15 14:02:06 by yback            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,3 @@ int	yb_path_init(char **spl_line, t_map *yback_map)
 		error_check = -1;
 	return (error_check);
 }
-

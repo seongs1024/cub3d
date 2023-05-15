@@ -6,11 +6,13 @@
 /*   By: yback <yback@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 19:30:40 by yback             #+#    #+#             */
-/*   Updated: 2023/05/05 19:45:14 by yback            ###   ########seoul.kr  */
+/*   Updated: 2023/05/15 15:10:53 by yback            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "map.h"
+
+void	init_map_with_file(char *file_name, t_map *yback_map);
 
 int	yb_isspace(char c)
 {
@@ -39,7 +41,7 @@ int	yb_find_max_col(t_map *yback_map)
 {
 	int	i;
 	int	j;
-	int max_len;
+	int	max_len;
 
 	i = 0;
 	j = 0;
@@ -69,33 +71,23 @@ char	*yb_done_setting_element(char *line, char *map_line, t_map *yback_map)
 		|| yback_map->flag != 2)
 	{
 		free(line);
-		error_handle("Error: Element missing!\n", map_line, yback_map);
+		error_handle("Error\nElement missing!\n", map_line, yback_map);
 	}
 	joined_line = ft_strjoin(map_line, line);
 	return (joined_line);
 }
 
-void	yb_print_structure(t_map *yback_map)
+t_map	*generate_map(char *file_name)
 {
-	int	i;
+	t_map	*yback_map;
 
-	i = 0;
-	printf("north_path = %s\n", yback_map->north_path);
-	printf("south_path = %s\n", yback_map->south_path);
-	printf("west_path = %s\n", yback_map->west_path);
-	printf("east_past = %s\n", yback_map->east_path);
-	printf("f_colors = ");
-	while (i < 3)
-		printf("%d ", yback_map->f_colors[i++]);
-	printf("\nc_colors = ");
-	i = 0;
-	while (i < 3)
-		printf("%d ", yback_map->c_colors[i++]);
-	printf("\n");
-	printf("height = %d, width = %d\n", yback_map->map_height, yback_map->map_width);
-	i = 0;
-	while (yback_map->map[i])
-		printf("%s\n", yback_map->map[i++]);
-	printf("player_pos = (%d, %d)\n", yback_map->player_pos[0], yback_map->player_pos[1]);
-	printf("player_dir = %c\n", yback_map->player_dir);
+	yback_map = malloc(sizeof(t_map));
+	if (!yback_map)
+	{
+		perror("Error\nmalloc\n");
+		exit(1);
+	}
+	ft_memset(yback_map, 0, sizeof(t_map));
+	init_map_with_file(file_name, yback_map);
+	return (yback_map);
 }

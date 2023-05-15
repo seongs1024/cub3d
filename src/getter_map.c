@@ -6,7 +6,7 @@
 /*   By: yback <yback@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 19:38:03 by yback             #+#    #+#             */
-/*   Updated: 2023/05/05 19:40:55 by yback            ###   ########seoul.kr  */
+/*   Updated: 2023/05/15 14:02:38 by yback            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	yb_map_check_split(char *map_line)
 		if (splitted_map[i][0] == '0' || splitted_map[i][line_size - 1] == '0')
 		{
 			error_check = -1;
-			break;
+			break ;
 		}
 	}
 	free_arr(splitted_map);
@@ -47,8 +47,8 @@ int	yb_wall_check(t_map *yback_map, int i, int j)
 		u = yback_map->map[i - 1][j];
 		d = yback_map->map[i + 1][j];
 		if (!(u == 'N' || u == 'S' || u == 'E' || u == 'W'
-			|| u == '1' || u == '0' || d == '1' || d == '0'
-			|| d == 'N' || d == 'S' || d == 'E' || d == 'W'))
+				|| u == '1' || u == '0' || d == '1' || d == '0'
+				|| d == 'N' || d == 'S' || d == 'E' || d == 'W'))
 			return (-1);
 	}
 	return (0);
