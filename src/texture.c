@@ -29,9 +29,9 @@ int	load_texture(void *ctx, char *path, t_texture *texture)
 int	init_textures(void *ctx, char **map_path, t_texture *texs)
 {
 	if (load_texture(ctx, map_path[0], &texs[0]) || \
-		load_texture(ctx, map_path[1], &texs[1]) || \
-		load_texture(ctx, map_path[2], &texs[2]) || \
-		load_texture(ctx, map_path[3], &texs[3]))
+		load_texture(ctx, map_path[3], &texs[1]) || \
+		load_texture(ctx, map_path[1], &texs[2]) || \
+		load_texture(ctx, map_path[2], &texs[3]))
 	{
 		return (-1);
 	}
