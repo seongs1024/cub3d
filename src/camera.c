@@ -33,8 +33,8 @@ void	init_cam(t_camera *cam, t_map *map)
 		+ 0.66 * (map->player_dir == 'E') \
 		+ 0 * (map->player_dir == 'S') \
 		+ -0.66 * (map->player_dir == 'W');
-	cam->move_speed = 0.05;
-	cam->rot_speed = 0.05;
+	cam->move_speed = 0.15;
+	cam->rot_speed = 0.15;
 }
 
 void	move_fb(t_camera *cam, t_map *map, double move_speed)
