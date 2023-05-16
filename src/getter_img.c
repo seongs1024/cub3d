@@ -6,7 +6,7 @@
 /*   By: yback <yback@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 19:33:57 by yback             #+#    #+#             */
-/*   Updated: 2023/05/15 14:02:06 by yback            ###   ########.fr       */
+/*   Updated: 2023/05/16 14:07:49 by yback            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	yb_check_path_empty(char **yb_path, char *spl_line)
 	int		tmp_fd;
 	char	first_byte;
 
-	if (!yb_path)
+	if (*yb_path != NULL)
 		return (-1);
 	else
 	{

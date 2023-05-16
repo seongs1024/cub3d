@@ -6,7 +6,7 @@
 /*   By: yback <yback@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 19:40:06 by yback             #+#    #+#             */
-/*   Updated: 2023/05/16 12:14:51 by yback            ###   ########seoul.kr  */
+/*   Updated: 2023/05/16 14:16:45 by yback            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,7 @@ int	yb_find_player(t_map *yback_map)
 		}
 		i++;
 	}
+	if (yback_map->player_dir == 0)
+		return (-1);
 	return (0);
 }

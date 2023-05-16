@@ -6,7 +6,7 @@
 /*   By: yback <yback@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 19:28:36 by yback             #+#    #+#             */
-/*   Updated: 2023/05/15 14:05:14 by yback            ###   ########.fr       */
+/*   Updated: 2023/05/16 14:11:12 by yback            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,15 @@ int	yb_strcmp(char *s1, char *s2)
 int	yb_atoi_check(char *spl_color)
 {
 	int	num;
+	int	i;
 
+	i = 0;
+	while (spl_color[i])
+	{
+		if (!('0' <= spl_color[i] && spl_color[i] <= '9'))
+			return (-123);
+		i++;
+	}
 	num = ft_atoi(spl_color);
 	if (!(0 <= num && num <= 255))
 		return (-123);
