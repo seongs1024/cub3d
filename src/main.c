@@ -57,10 +57,10 @@ char	*yb_reading_file(int fd, t_map *yback_map, char *map_line)
 			break ;
 		if (ft_strchr("NSWEFC", line[0]))
 			error_check = yb_path_color_init(yb_trim(line), yback_map);
+		else if (ft_strlen(map_line) != 0 && ft_strchr(line, '1') == 0)
+			yback_map->flag = -2;
 		else if (line[0] != '\n' && yback_map->flag != -2)
 			map_line = yb_done_setting_element(line, map_line, yback_map);
-		else if (ft_strlen(map_line) != 0 && ft_strlen(line) == 1)
-			yback_map->flag = -2;
 		else if (line[0] == '\n' && fnull(line))
 			continue ;
 		else
