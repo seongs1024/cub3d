@@ -91,7 +91,8 @@ int	main(int argc, char *argv[])
 {
 	t_engine	engine;
 
-	if (argc != 2 || argv[1] == NULL || argv[1][0] == '\0')
+	if (argc != 2 || argv[1] == NULL || ft_strlen(argv[1]) < 5 || \
+		yb_check_cub(argv[1]))
 	{
 		printf("Error\nInvalid arguments!\n");
 		exit(1);

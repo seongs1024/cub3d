@@ -68,3 +68,17 @@ int	yb_check_int(char **spl_color)
 	}
 	return (0);
 }
+
+int	yb_check_cub(char *file_ex)
+{
+	int	len;
+	
+	len = ft_strlen(file_ex);
+	if (file_ex[len - 4] == '.'
+		&& file_ex[len - 4] == 'c'
+		&& file_ex[len - 4] == 'u'
+		&& file_ex[len - 4] == 'b'
+		)
+		return (0);
+	return (-1);
+}

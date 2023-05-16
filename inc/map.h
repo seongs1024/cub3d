@@ -68,6 +68,8 @@ size_t	yb_strslen(char **strs);
 int		yb_strcmp(char *s1, char *s2);
 int		yb_atoi_check(char *spl_color);
 int		yb_check_int(char **spl_color);
+int		yb_check_cub(char *file_ex);
+
 
 /* utils2.c */
 int		yb_isspace(char c);
