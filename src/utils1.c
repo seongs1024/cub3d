@@ -72,13 +72,13 @@ int	yb_check_int(char **spl_color)
 int	yb_check_cub(char *file_ex)
 {
 	int	len;
-	
+
 	len = ft_strlen(file_ex);
 	if (file_ex[len - 4] == '.'
 		&& file_ex[len - 3] == 'c'
 		&& file_ex[len - 2] == 'u'
 		&& file_ex[len - 1] == 'b'
-		)
+	)
 		return (0);
 	return (-1);
 }

@@ -70,7 +70,6 @@ int		yb_atoi_check(char *spl_color);
 int		yb_check_int(char **spl_color);
 int		yb_check_cub(char *file_ex);
 
-
 /* utils2.c */
 int		yb_isspace(char c);
 char	*yb_trim(char *line);

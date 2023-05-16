@@ -47,7 +47,7 @@ int	yb_comma_check(char *spl_line)
 		i++;
 	}
 	if (comma_count != 2)
-		return (-1);	
+		return (-1);
 	return (0);
 }
 
@@ -59,7 +59,7 @@ int	yb_color_init(char **spl_line, t_map *yback_map)
 	error_check = 0;
 	spl_color = ft_split(spl_line[1], ',');
 	if (yb_comma_check(spl_line[1]) == -1 || yb_check_int(spl_color) == -1
-			|| yb_strslen(spl_color) != 3)
+		|| yb_strslen(spl_color) != 3)
 	{
 		free_arr(spl_color);
 		return (-1);
