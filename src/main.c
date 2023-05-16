@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "mlx.h"
 #include "map.h"
 #include "engine.h"
