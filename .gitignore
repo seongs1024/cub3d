@@ -1,0 +1,5 @@
+test/
+obj/
+dep/*/*.o
+dep/*/*.a
+cub3D
