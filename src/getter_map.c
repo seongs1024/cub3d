@@ -49,8 +49,8 @@ int	yb_wall_check(t_map *yback_map, int i, int j)
 		if (!(u == 'N' || u == 'S' || u == 'E' || u == 'W'
 				|| u == '1' || u == '0'))
 			return (-1);
-		if (!(d == '1' || d == '0' || d == 'N' || d == 'S' 
-			|| d == 'E' || d == 'W'))
+		if (!(d == '1' || d == '0' || d == 'N' || d == 'S'
+				|| d == 'E' || d == 'W'))
 			return (-1);
 	}
 	return (0);
