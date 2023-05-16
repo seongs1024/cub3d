@@ -97,9 +97,9 @@ int	main(int argc, char *argv[])
 		printf("Error\nInvalid arguments!\n");
 		exit(1);
 	}
+	engine.map = generate_map(argv[1]);
 	engine.ctx = mlx_init();
 	engine.window = mlx_new_window(engine.ctx, WINDOW_W, WINDOW_H, "cub3D");
-	engine.map = generate_map(argv[1]);
 	init_display(engine.ctx, &engine.display, WINDOW_W, WINDOW_H);
 	init_cam(&engine.cam, engine.map);
 	if (init_textures(engine.ctx, &engine.map->north_path, engine.texs))
