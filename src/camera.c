@@ -15,8 +15,8 @@
 
 void	init_cam(t_camera *cam, t_map *map)
 {
-	cam->pos_x = map->player_pos[1];
-	cam->pos_y = map->player_pos[0];
+	cam->pos_x = map->player_pos[1] + 0.5;
+	cam->pos_y = map->player_pos[0] + 0.5;
 	cam->dir_x = 0 * (map->player_dir == 'N') \
 		+ 1 * (map->player_dir == 'E') \
 		+ 0 * (map->player_dir == 'S') \
