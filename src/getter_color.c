@@ -33,6 +33,24 @@ int	yb_color_check(int *colors)
 	return (0);
 }
 
+int	yb_comma_check(char *spl_line)
+{
+	int	i;
+	int	comma_count;
+
+	i = 0;
+	comma_count = 0;
+	while (spl_line[i])
+	{
+		if (spl_line[i] == ',')
+			comma_count++;
+		i++;
+	}
+	if (comma_count != 2)
+		return (-1);	
+	return (0);
+}
+
 int	yb_color_init(char **spl_line, t_map *yback_map)
 {
 	char	**spl_color;
@@ -40,7 +58,8 @@ int	yb_color_init(char **spl_line, t_map *yback_map)
 
 	error_check = 0;
 	spl_color = ft_split(spl_line[1], ',');
-	if (yb_check_int(spl_color) == -1 || yb_strslen(spl_color) != 3)
+	if (yb_comma_check(spl_line[1]) == -1 || yb_check_int(spl_color) == -1
+			|| yb_strslen(spl_color) != 3)
 	{
 		free_arr(spl_color);
 		return (-1);
