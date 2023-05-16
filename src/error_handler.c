@@ -6,7 +6,7 @@
 /*   By: yback <yback@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 15:24:17 by yback             #+#    #+#             */
-/*   Updated: 2023/05/15 15:08:25 by yback            ###   ########.fr       */
+/*   Updated: 2023/05/16 13:19:26 by yback            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	free_yback(t_map *yback_map)
 
 void	error_handle(char *msg, char *map_line, t_map *yback_map)
 {
-	perror(msg);
+	printf("%s", msg);
 	fnull(map_line);
 	free_yback(yback_map);
 	exit(1);

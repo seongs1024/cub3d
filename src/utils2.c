@@ -6,7 +6,7 @@
 /*   By: yback <yback@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 19:30:40 by yback             #+#    #+#             */
-/*   Updated: 2023/05/15 15:10:53 by yback            ###   ########.fr       */
+/*   Updated: 2023/05/16 13:18:24 by yback            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ t_map	*generate_map(char *file_name)
 	yback_map = malloc(sizeof(t_map));
 	if (!yback_map)
 	{
-		perror("Error\nmalloc\n");
+		printf("Error\nmalloc\n");
 		exit(1);
 	}
 	ft_memset(yback_map, 0, sizeof(t_map));

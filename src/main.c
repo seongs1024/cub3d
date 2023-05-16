@@ -6,7 +6,7 @@
 /*   By: yback <yback@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 15:37:43 by yback             #+#    #+#             */
-/*   Updated: 2023/05/15 15:05:39 by yback            ###   ########.fr       */
+/*   Updated: 2023/05/16 13:18:24 by yback            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	main(int argc, char *argv[])
 
 	if (argc != 2 || argv[1] == NULL || argv[1][0] == '\0')
 	{
-		perror("Error\nInvalid arguments!\n");
+		printf("Error\nInvalid arguments!\n");
 		exit(1);
 	}
 	engine.ctx = mlx_init();
@@ -103,7 +103,7 @@ int	main(int argc, char *argv[])
 	init_cam(&engine.cam, engine.map);
 	if (init_textures(engine.ctx, &engine.map->north_path, engine.texs))
 	{
-		perror("Error\nCannot load textures!\n");
+		printf("Error\nCannot load textures!\n");
 		destroy_engine(&engine);
 		return (1);
 	}
