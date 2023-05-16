@@ -54,6 +54,9 @@ OBJS		:=	$(patsubst $(SRCDIR)/%,$(BLDDIR)/%,$(SRCS:.$(CEXT)=.$(OEXT)))
 #Defauilt Make
 all: $(NAME)
 
+test: $(NAME)
+	./test/test.sh
+
 bonus: 
 	@make -C $(BONUSDIR)
 	@cp $(BONUSDIR)/$(NAME) ./
@@ -101,4 +104,4 @@ $(BLDDIR)/%.$(OEXT): $(SRCDIR)/%.$(CEXT)
 	$(CC) $(CFLAGS) $(SANITIZE) $(DEBUG) $(INC) -c -o $@ $<
 
 #Non-File Targets
-.PHONY: all re clean fclean bonus directories depend
+.PHONY: all re clean fclean bonus directories depend test
