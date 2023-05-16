@@ -6,7 +6,7 @@
 /*   By: yback <yback@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/05 19:40:06 by yback             #+#    #+#             */
-/*   Updated: 2023/05/15 14:40:12 by yback            ###   ########.fr       */
+/*   Updated: 2023/05/16 12:14:51 by yback            ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	yb_find_player_pos(t_map *yback_map, int i, int j)
 	c = yback_map->map[i][j];
 	if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
 	{
+		if (yback_map->player_dir != 0)
+			return (-1);
 		yback_map->player_dir = c;
 		yback_map->player_pos[0] = i;
 		yback_map->player_pos[1] = j;
