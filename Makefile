@@ -80,9 +80,8 @@ clean:
 
 #Full Clean, Objects and Binaries
 fclean: clean
-	@for ddir in $(addprefix $(DEPDIR)/, $(DEPDIRS)); do \
-		make -s -C $$ddir fclean; \
-	done
+	@make -s -C $(addprefix $(DEPDIR)/, $(GNLDIR)) fclean
+	@make -s -C $(addprefix $(DEPDIR)/, $(LFDIR)) fclean
 	@$(RM) -rf $(NAME)
 
 #Link
